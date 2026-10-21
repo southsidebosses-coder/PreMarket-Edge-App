@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PreMarket Edge — Project Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E14; --card:#161B22; --line:#262C36; --ink:#F0F6FC; --mut:#8B949E;
+    --mint:#00E676; --cyan:#00B0FF; --coral:#FF5252; --dim:#555;
+  }
+  *{box-sizing:border-box; margin:0}
+  body{background:var(--bg); color:var(--ink);
+       font:15px/1.6 "IBM Plex Sans",system-ui,sans-serif; padding-bottom:60px}
+  .mono{font-family:"IBM Plex Mono",monospace}
+  .wrap{max-width:1060px; margin:0 auto; padding:0 20px}
+
+  header{border-bottom:1px solid var(--line)}
+  .bar{display:flex; justify-content:space-between; align-items:center; padding:18px 0 14px}
+  .brand{display:flex; align-items:center; gap:12px}
+  .mark{width:34px;height:34px;border:1px solid var(--line);border-radius:6px;
+        display:grid;place-items:center;font-family:"IBM Plex Mono";color:var(--mint);font-weight:700}
+  h1{font:700 17px/1.2 "IBM Plex Mono";letter-spacing:.4px}
+  h1 small{display:block;font-size:10px;color:var(--mut);letter-spacing:2px;font-weight:400;margin-top:3px}
+  .ver{font:600 11px "IBM Plex Mono";color:var(--cyan);border:1px solid var(--line);
+       padding:5px 10px;border-radius:4px}
+
+  /* signature: the tape */
+  .tape{border-top:1px solid var(--line); background:#080A0F; overflow:hidden; white-space:nowrap}
+  .tape-inner{display:inline-block; padding:7px 0; font:600 11px "IBM Plex Mono"; letter-spacing:1px;
+              animation:slide 36s linear infinite}
+  .tape span{margin-right:38px}
+  .up{color:var(--mint)} .acc{color:var(--cyan)} .warn{color:var(--coral)}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion: reduce){.tape-inner{animation:none}}
+
+  .eyebrow{font:700 10px "IBM Plex Mono"; color:var(--mut); letter-spacing:2.5px; margin-bottom:10px}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px}
+  .card.wide{grid-column:1/-1}
+
+  ul.plain{list-style:none} ul.plain li{padding:5px 0 5px 20px; position:relative; color:var(--ink)}
+  ul.plain li::before{content:"▸"; position:absolute; left:2px; color:var(--mut)}
+
+  /* order-book style task rows */
+  .row{display:flex; align-items:center; gap:12px; padding:9px 8px; border-bottom:1px solid var(--line);
+       font-size:13px}
+  .row:last-child{border-bottom:0}
+  .row:hover{background:rgba(0,176,255,.05)}
+  .chip{font:700 9px "IBM Plex Mono"; letter-spacing:1px; padding:3px 8px; border-radius:3px;
+        border:1px solid; min-width:74px; text-align:center}
+  .chip.done{color:var(--mint); border-color:var(--mint); background:rgba(0,230,118,.08)}
+  .chip.active{color:var(--cyan); border-color:var(--cyan); background:rgba(0,176,255,.08)}
+  .chip.blocked{color:var(--coral); border-color:var(--coral); background:rgba(255,82,82,.08)}
+  .row .who{margin-left:auto; font:600 10px "IBM Plex Mono"; color:var(--mut); letter-spacing:1px}
+  .row.done .t{color:var(--mut); text-decoration:line-through}
+  .row .t{flex:1}
+
+  .flow{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:8px}
+  @media(max-width:820px){.flow{grid-template-columns:1fr 1fr}}
+  .step{border:1px solid var(--line); border-radius:6px; padding:12px; background:var(--bg)}
+  .step b{font:700 11px "IBM Plex Mono"; color:var(--cyan); display:block; margin-bottom:6px; letter-spacing:1px}
+  .step span{font-size:12.5px; color:var(--ink)}
+
+  code,.code{font:600 12.5px "IBM Plex Mono"; background:var(--bg); border:1px solid var(--line);
+             padding:2px 6px; border-radius:4px; color:var(--cyan)}
+  .cmd{display:block; background:var(--bg); border:1px solid var(--line); border-radius:6px;
+       padding:10px 12px; font:600 12.5px/1.9 "IBM Plex Mono"; color:var(--ink); margin:8px 0 2px; overflow-x:auto}
+  .cmd i{color:var(--mut); font-style:normal}
+  a{color:var(--cyan)}
+  .sha{font:600 11px "IBM Plex Mono"; color:var(--mint); word-break:break-all; cursor:pointer}
+  .sha:hover{text-decoration:underline}
+  .note{font-size:12px; color:var(--mut); margin-top:6px}
+  .warnbox{border:1px solid var(--coral); background:rgba(255,82,82,.07); border-radius:6px;
+           padding:10px 12px; font-size:12.5px; margin-top:10px}
+  footer{margin-top:34px; border-top:1px solid var(--line); padding-top:14px;
+         font:400 11px "IBM Plex Mono"; color:var(--mut); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+  :focus-visible{outline:2px solid var(--cyan); outline-offset:2px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <div class="brand">
+      <div class="mark">P/E</div>
+      <h1>PreMarket Edge &amp; Position Sizer<small>PROJECT CONSOLE · PARTNER BUILD HUB</small></h1>
+    </div>
+    <div class="ver">v1.0.0 · android</div>
+  </div>
+  <div class="tape mono" aria-hidden="true">
+    <div class="tape-inner" id="tape"></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+    <section class="card">
+      <div class="eyebrow">CURRENT STATE — WHAT SHIPS TODAY</div>
+      <ul class="plain">
+        <li>Risk engine: shares, capital, delta-adjusted contracts, R:R tiers</li>
+        <li>REJECTED firewall: over-allocation refused regardless of R:R</li>
+        <li>Always-visible directive card: red INVALID + per-field hints</li>
+        <li>Morning Edge: market clock, checklist, SPY context, pivots</li>
+        <li>Setup journal: log → review → reload into sizer</li>
+        <li>AdMob live: banner + capped interstitial behind one switch</li>
+        <li>Release config: icons, splash, versionCode, eas.json</li>
+      </ul>
+      <div class="note">Verified: <code>expo prebuild -p android</code> clean — real App ID baked into the manifest. 60/60 Jest tests.</div>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">HANDOFF ARTIFACTS</div>
+      <ul class="plain">
+        <li><b>DEPLOYMENT.md</b> — runbook + Play checklist + blockers</li>
+        <li><b>DEVICE_CHECKLIST.md</b> — printable 10-step on-device run</li>
+        <li><b>PLAY_DATA_SAFETY.md</b> — exact form wording (owner-gated)</li>
+        <li><b>PLAY_RELEASE.md</b> — signing → AAB → internal testing</li>
+        <li><b>privacy-policy.html</b> — host on GitHub Pages (2 placeholders)</li>
+        <li><b>assets/</b> — app icon, adaptive, splash, Play icon + feature graphic</li>
+      </ul>
+    </section>
+
+    <section class="card wide">
+      <div class="eyebrow">TASK BOARD — ORDER-BOOK VIEW</div>
+      <div class="row done"><span class="chip done">DONE</span><span class="t">Risk engine + journal + market context + AdMob wiring</span><span class="who">GENSPARK</span></div>
+      <div class="row done"><span class="chip done">DONE</span><span class="t">Release config, brand assets, deployment docs</span><span class="who">GENSPARK</span></div>
+      <div class="row"><span class="chip active">ACTIVE</span><span class="t">EAS build → install APK → run the 10-step device checklist</span><span class="who">OWNER</span></div>
+      <div class="row"><span class="chip blocked">ON OWNER</span><span class="t">2+ device screenshots (9:16) from the running build</span><span class="who">OWNER</span></div>
+      <div class="row"><span class="chip blocked">ON OWNER</span><span class="t">Host privacy-policy.html → paste URL into Play forms</span><span class="who">OWNER</span></div>
+      <div class="row"><span class="chip blocked">ON OWNER</span><span class="t">Play Console account, listing, data-safety sign-off, internal track</span><span class="who">OWNER</span></div>
+      <div class="row"><span class="chip active">NEXT</span><span class="t">Partner pick-up: multi-symbol context picker (see CONTRIBUTING.md)</span><span class="who">PARTNER</span></div>
+      <div class="row"><span class="chip blocked">ON OWNER</span><span class="t">iOS path — register iOS app in AdMob first (decision: deferred)</span><span class="who">OWNER</span></div>
+    </section>
+
+    <section class="card wide">
+      <div class="eyebrow">JOIN THE BUILD — NO GENSPARK ACCOUNT NEEDED</div>
+      <div class="flow">
+        <div class="step"><b>1 · GET THE CODE</b><span>Clone the GitHub repo (owner invites you), or unzip the shared <code>PreMarket-Edge-App.zip</code>.</span></div>
+        <div class="step"><b>2 · RUN IT</b><span><code>npm install</code> then <code>npm test</code> → expect 60/60. <code>npx expo start</code> to open the app.</span></div>
+        <div class="step"><b>3 · BRANCH &amp; BUILD</b><span>Pick a task above → branch → follow CONTRIBUTING.md (test-first; read the act() hazard before touching screen tests).</span></div>
+        <div class="step"><b>4 · HAND BACK</b><span>Open a PR. Owner merges, re-zips, re-hashes, and the next Genspark pass continues from the verified archive.</span></div>
+      </div>
+      <div class="warnbox">Android device work is on the OWNER until the EAS build is tied to their Expo login — the sandbox cannot see browser sessions. Partner machine can run its own EAS build against the same repo.</div>
+    </section>
+
+    <section class="card wide">
+      <div class="eyebrow">VERIFIED BASELINE</div>
+      <div class="mono" style="font-size:12px">
+        package <span class="acc">com.premarketedge.app</span> ·
+        tests <span class="up">60/60</span> ·
+        admob <span class="acc">banner …/9162963083 · interstitial …/8797412832 · app …~6523612445</span>
+        <div style="margin-top:8px">archive sha256 <span class="sha" id="sha" title="click to copy">d969a58082d360a3e7f0f1ac42c5f2be9045f3a0a94c7e9bd1f8dd39bc758758</span></div>
+        <div class="note">Device runtime verification: NOT YET RUN — every check is procedural until the device checklist passes.</div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <span>PREMARKET EDGE · PROJECT CONSOLE</span>
+    <span>ANALYTICAL TOOL — NOT FINANCIAL ADVICE</span>
+  </footer>
+</main>
+
+<script>
+  (function(){
+    var items = ["PREMARKET EDGE v1.0.0","TESTS 60/60 PASS","PREBUILD CLEAN","ADMOB BANNER LIVE","ADMOB INTERSTITIAL LIVE","JOURNAL: SAVE + REVIEW","DEVICE RUN: PENDING","PLAY UPLOAD: PENDING"];
+    var strip = document.getElementById('tape');
+    var html = items.map(function(t,i){
+      var cls = /PASS|CLEAN|LIVE|v1/.test(t) ? 'up' : /PENDING/.test(t) ? 'warn' : 'acc';
+      return '<span class="'+cls+'">'+t+'</span>';
+    }).join('');
+    strip.innerHTML = html + html; /* duplicated for seamless loop */
+    var sha = document.getElementById('sha');
+    sha.addEventListener('click', function(){
+      navigator.clipboard && navigator.clipboard.writeText(sha.textContent.trim());
+      var old = sha.textContent; sha.textContent = 'copied ✓';
+      setTimeout(function(){ sha.textContent = old; }, 900);
+    });
+  })();
+</script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
