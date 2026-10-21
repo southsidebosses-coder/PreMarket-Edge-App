@@ -1,0 +1,32 @@
+{
+  "name": "premarket-edge-app",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-navigation/bottom-tabs": "^7.21.0",
+    "@react-navigation/native": "^7.5.1",
+    "expo": "~57.0.28",
+    "react": "19.3.0",
+    "react-native": "0.87.1",
+    "react-native-google-mobile-ads": "^17.3.0",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "~4.26.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.0",
+    "@react-native/assets-registry": "^0.87.1",
+    "@testing-library/react-native": "^14.1.0",
+    "expo-modules-core": "^57.0.22",
+    "jest": "~29.7.0",
+    "jest-expo": "~57.0.6"
+  },
+  "private": true
+}

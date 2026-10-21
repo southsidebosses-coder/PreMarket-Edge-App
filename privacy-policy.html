@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!-- ═══════════════════════════════════════════════════════════════════════
+  READY-TO-PUBLISH after replacing TWO placeholders (search for "["):
+    1. [YOUR CONTACT EMAIL]      2. [EFFECTIVE DATE]
+
+  EXACT GITHUB PAGES HOSTING STEPS (no build tools needed):
+    1. Create a public GitHub repo, e.g. <yourname>/premarket-edge-pages
+    2. Copy this file to the repo root, renamed to: privacy-policy.html
+       (or index.html if you want it at the bare Pages URL)
+    3. Repo → Settings → Pages → Source: "Deploy from a branch" →
+       Branch: main / root → Save
+    4. Wait ~1 min; the published URL appears on that Settings page:
+       https://<yourname>.github.io/premarket-edge-pages/privacy-policy.html
+    5. Paste that URL into (a) Play Console → Store listing → Privacy policy,
+       (b) Data-safety form, (c) app.json → expo.extra if you want it in-app.
+    6. Later edits: commit + push to main; the live page updates on republish.
+═══════════════════════════════════════════════════════════════════════ -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — PreMarket Edge &amp; Position Sizer</title>
+<style>
+  body { background:#0B0E14; color:#F0F6FC; font:16px/1.7 -apple-system,Roboto,Helvetica,Arial,sans-serif;
+         max-width:760px; margin:0 auto; padding:40px 22px; }
+  h1 { font-size:24px; } h2 { font-size:17px; margin-top:32px; color:#00B0FF; }
+  .meta { color:#8B949E; font-size:13px; }
+  .ph { background:#3a1a1a; color:#FF5252; padding:2px 6px; border-radius:4px; font-weight:700; }
+  a { color:#00B0FF; } .fine { color:#8B949E; font-size:13px; }
+</style>
+</head>
+<body>
+<h1>Privacy Policy — PreMarket Edge &amp; Position Sizer</h1>
+<p class="meta">Effective date: <span class="ph">[EFFECTIVE DATE]</span> · Android · v1.0</p>
+
+<h2>1. Overview</h2>
+<p>PreMarket Edge &amp; Position Sizer is an offline-first trading calculator and journal.
+We do not operate accounts, and we never see your trading data. The only third party that
+processes user data through this app is Google's advertising service, described in §3.</p>
+
+<h2>2. Data stored on your device (never transmitted)</h2>
+<p>Your setup journal, risk-parameter defaults, and the ad-free purchase flag are stored
+locally using the device's AsyncStorage. They are not uploaded to us or anyone else, and
+they are permanently erased when you uninstall the app or use the journal's CLEAR ALL.</p>
+
+<h2>3. Advertising (Google AdMob)</h2>
+<p>The free version shows banner ads and a limited interstitial ad via the
+<b>Google Mobile Ads SDK (AdMob)</b>. For this the SDK collects and shares with Google:
+your <b>advertising identifier</b> (device or other IDs) and <b>approximate location
+derived from IP signals</b>, plus basic ad-interaction events — for advertising and
+measurement purposes. The app itself requests no location permissions and never reads GPS.</p>
+<ul>
+  <li>Google's use of this data: <a href="https://policies.google.com/technologies/ads">policies.google.com/technologies/ads</a></li>
+  <li>Opt out of ads personalization: device Settings → Google → Ads, or
+      <a href="https://adssettings.google.com">adssettings.google.com</a></li>
+  <li>Remove all ads at any time via the one-time in-app upgrade.</li>
+</ul>
+
+<h2>4. Data sharing</h2>
+<p>We do not sell personal data. The only sharing is app data ↔ Google AdMob as described
+in §3. There are no other third-party SDKs, trackers, or analytics.</p>
+
+<h2>5. Retention &amp; deletion</h2>
+<p>Local data lives on your device until you delete it (uninstall or CLEAR ALL). For data
+processed by Google through ads, use the Google links in §3, or contact us at
+<span class="ph">[YOUR CONTACT EMAIL]</span> and we will assist.</p>
+
+<h2>6. Children</h2>
+<p>The app is not directed at children under 13 and is not marketed to them. We do not
+knowingly collect data from children.</p>
+
+<h2>7. Permissions</h2>
+<p>Internet access only (for market data and ads). No camera, location, contacts, storage,
+or phone-state permissions are requested.</p>
+
+<h2>8. Financial disclaimer</h2>
+<p>PreMarket Edge is an analytical tool and trading journal — <b>not financial advice</b>.
+No output is a recommendation. Trading options involves substantial risk of loss.</p>
+
+<h2>9. Changes</h2>
+<p>Material changes to this policy will be reflected here with a new effective date.</p>
+
+<h2>10. Contact</h2>
+<p>Questions or deletion requests: <span class="ph">[YOUR CONTACT EMAIL]</span></p>
+<p class="fine">© 2026 PreMarket Edge. All rights reserved.</p>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "PreMarket Edge",
+    "slug": "premarket-edge-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0B0E14",
+    "scheme": "premarketedge",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "backgroundColor": "#0B0E14",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.premarketedge.app",
+      "infoPlist": {
+        "UIBackgroundModes": []
+      }
+    },
+    "android": {
+      "package": "com.premarketedge.app",
+      "edgeToEdgeEnabled": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B0E14"
+      },
+      "versionCode": 1
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-2429928174841676~6523612445",
+          "userTrackingUsageDescription": "This identifier is used to show relevant ads and measure ad performance."
+        }
+      ]
+    ],
+    "extra": {
+      "admobBannerUnitId": "ca-app-pub-2429928174841676/9162963083",
+      "admobInterstitialUnitId": "ca-app-pub-2429928174841676/8797412832",
+      "eas": {
+        "projectId": "3529f559-6d8a-4844-9a0c-adc9b5cb52fa"
+      }
+    },
+    "icon": "./assets/icon.png",
+    "owner": "southside-bosses-marketing"
+  }
+}
